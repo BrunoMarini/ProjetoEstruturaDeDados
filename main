@@ -1,0 +1,58 @@
+#define _CRT_SECURE_NO_WARNINGS	
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+enum menuPrincipal {
+	Cadastro = 1, Vinculamentos, Listagens, Cancelamentos, Sair
+};
+
+struct tipoAluno {
+	char nome[50];
+	int ra;
+	bool materias[20];
+};
+
+struct tipoProfessor {
+	char nome[50];
+	int id;
+	bool materias[20];
+};
+
+int main()
+{
+	menuPrincipal op;
+	tipoAluno alunos[20];
+
+
+	setlocale(LC_ALL, "Portuguese");
+
+	printf("\t--- Matr�cula de Alunos ---\n");
+	printf("\t\t1. Cadastros;\n");
+	printf("\t\t2. Vinculamentos;\n");
+	printf("\t\t3. Listagens;\n");
+	printf("\t\t4. Cancelamentos;\n");
+	printf("\t\t5. Sair\n\n\n");
+	printf("\tDigite a op��o desejada: ");
+	scanf("%i", &op);
+
+	switch (op)
+	{
+	case Cadastro:
+
+		break;
+	case Vinculamentos:
+		break;
+	case Listagens:
+		break;
+	case Cancelamentos:
+		break;
+	case Sair:
+		break;
+	}
+
+	system("pause");
+
+	return 0;
+}
