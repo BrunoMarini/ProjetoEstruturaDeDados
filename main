@@ -7,7 +7,9 @@
 enum menuPrincipal {
 	Cadastro = 1, Vinculamentos, Listagens, Cancelamentos, Sair
 };
-
+enum menuCadastros {
+	cadastroAlunos = 1, cadastroMaterias, cadastroProfessor, sair
+};
 struct tipoAluno {
 	char nome[50];
 	int ra;
@@ -20,6 +22,8 @@ struct tipoProfessor {
 	bool materias[20];
 };
 
+void matricula(tipoAluno*);
+
 int main()
 {
 	menuPrincipal op;
@@ -28,19 +32,19 @@ int main()
 
 	setlocale(LC_ALL, "Portuguese");
 
-	printf("\t--- Matr�cula de Alunos ---\n");
-	printf("\t\t1. Cadastros;\n");
-	printf("\t\t2. Vinculamentos;\n");
-	printf("\t\t3. Listagens;\n");
-	printf("\t\t4. Cancelamentos;\n");
-	printf("\t\t5. Sair\n\n\n");
-	printf("\tDigite a op��o desejada: ");
+	printf("--- Matrícula de Alunos ---\n\n");
+	printf("\t1. Cadastros;\n");
+	printf("\t2. Vinculamentos;\n");
+	printf("\t3. Listagens;\n");
+	printf("\t4. Cancelamentos;\n");
+	printf("\t5. Sair\n\n");
+	printf("Digite a opção desejada: ");
 	scanf("%i", &op);
 
 	switch (op)
 	{
 	case Cadastro:
-
+		matricula(alunos);
 		break;
 	case Vinculamentos:
 		break;
@@ -55,4 +59,32 @@ int main()
 	system("pause");
 
 	return 0;
+}
+
+void matricula(tipoAluno* alunos)
+{
+	menuCadastros op;
+
+	printf("--- Cadastros ---\n\n");
+	printf("\t1. Cadastro Alunos;\n");
+	printf("\t2. Cadastro Matérias;\n");
+	printf("\t3. Cadastro Professores;\n");
+	printf("\t4. Voltar;\n\n");
+	printf("Digite a opção desejada: ");
+	scanf("%i", &op);
+
+	system("cls");
+
+	switch (op)
+	{
+	case cadastroAlunos:
+		break;
+	case cadastroMaterias:
+		break;
+	case cadastroProfessor:
+		break;
+	case sair:
+		break;
+	}
+
 }
