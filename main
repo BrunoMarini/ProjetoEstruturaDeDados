@@ -302,7 +302,7 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 	
 	menuListagem op;
 	bool repeteDados;
-	int i, qualAluno, flag;
+	int i, qualAluno, qualDisciplina, flag;
 
 	printf("--- Listagem ---\n\n");
 	printf("\t1. Imprimir Alunos;\n");
@@ -385,7 +385,7 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 			flag = 1;
 
 			system("cls");
-			printf("--------Matérias que %s está cadastrado---------\n", alunos[qualAluno - 1].nome);
+			printf("--------Matérias que %s está cadastrado---------\n\n", alunos[qualAluno - 1].nome);
 
 			for (i = 0; i < *quantDisciplina; i++)
 			{			
@@ -396,6 +396,47 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 				}
 				
 			}
+
+			printf("\n\n--------Fim das matérias---------\n\n", alunos[qualAluno - 1].nome);
+
+			system("pause");
+
+		break;
+
+	case Aluno_Discip:
+
+		system("cls");
+		getchar();
+		printf("-----Disciplinas cadastradas no sistema-----\n");
+
+		for (i = 0; i < *quantDisciplina; i++)
+		{
+			printf("\t%i. %s", i + 1, materias[i]);
+		}
+
+		printf("--------Fim da lista de disciplinas---------\n");
+
+		printf("\n Digite o numero da disciplina: ");
+		scanf("%i", &qualDisciplina);
+
+		flag = 1;
+
+		system("cls");
+		printf("--------Alunos que estão cadastrados na disciplina %s---------\n\n", materias);
+
+		for (i = 0; i < *quantAlunos; i++)
+		{
+			if (*alunos[i - 1].materias == true)
+			{
+				printf("%i. %s", flag, alunos[i].nome);
+				flag++;
+			}
+
+		}
+
+		printf("\n--------Fim das matérias---------\n\n");
+
+		system("pause");
 
 		break;
 	default:
