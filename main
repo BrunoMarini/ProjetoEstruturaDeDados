@@ -422,7 +422,7 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 		flag = 1;
 
 		system("cls");
-		printf("--------Alunos que estão cadastrados na disciplina %s---------\n\n", materias);
+		printf("--------Alunos que estão cadastrados na disciplina selecionada---------\n\n");
 
 		for (i = 0; i < *quantAlunos; i++)
 		{
