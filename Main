@@ -1,0 +1,335 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+enum menuPrincipal {
+	Cadastro = 1, Vinculamentos, Listagens, Cancelamentos, Sair
+};
+enum menuCadastros {
+	cadastroAlunos = 1, cadastroMaterias, cadastroProfessor, sair
+};
+enum menuVinculacao {
+	Vinc_Al_Di = 1, Vinc_Pr_Di
+};
+enum menuListagem {
+	TAlunos = 1, TDiscip, TProf, Discip_Aluno, Aluno_Discip, Discip_Prof, Prof_Discip
+};
+struct tipoAluno {
+	char nome[50];
+	int ra;
+	bool materias[20];
+};
+
+struct tipoProfessor {
+	char nome[50];
+	int id;
+	bool materias[20];
+};
+
+int cadastramento(tipoAluno*,tipoProfessor*, char[20][20], int*, int*, int*); //alterei para poder retornar o valor e saber se deve continuar a receber dados
+int vinculacao(tipoAluno*,tipoProfessor*, char[20][20], int*, int*, int*);
+int listagem(tipoAluno*,tipoProfessor*, char[20][20], int*, int*, int*);
+
+int main()
+{
+	menuPrincipal op;
+	tipoAluno alunos[20];
+	tipoProfessor professores[20];
+	bool continuarMenu;
+	char materias[20][20];
+	int quantDisciplina=0;
+	int quantAlunos=0;
+	int quantProfessores=0;
+
+
+	setlocale(LC_ALL, "Portuguese");
+
+	do{
+        printf("--- Matrícula de Alunos ---\n\n");
+        printf("\t1. Cadastros;\n");
+        printf("\t2. Vinculamentos;\n");
+        printf("\t3. Listagens;\n");
+        printf("\t4. Cancelamentos;\n");
+        printf("\t5. Sair\n\n");
+        printf("Digite a opção desejada: ");
+        scanf("%i", &op);
+
+        switch (op)
+        {
+        case Cadastro:
+            do{
+                system("cls");
+                continuarMenu = cadastramento(alunos,professores, materias, &quantDisciplina, &quantAlunos, &quantProfessores);
+            }while(continuarMenu);
+            break;
+        case Vinculamentos:
+            do{
+                system("cls");
+                continuarMenu = vinculacao(alunos,professores, materias, &quantDisciplina, &quantAlunos, &quantProfessores);
+            }while(continuarMenu);
+            break;
+        case Listagens:
+            do{
+                system("cls");
+                continuarMenu = listagem(alunos,professores, materias, &quantDisciplina, &quantAlunos, &quantProfessores);
+            }while(continuarMenu);
+            break;
+        case Cancelamentos:
+            system("cls");
+            break;
+        case Sair:
+            break;
+        }
+	}while(op != 5);
+
+	//system("pause");
+
+	return 0;
+}
+
+int cadastramento(tipoAluno* alunos,tipoProfessor* professores, char materias[20][20], int* quantDisciplina, int* quantAlunos, int* quantProfessores)
+{
+
+
+	menuCadastros op;
+	bool repeteDados;
+
+	printf("--- Cadastros ---\n\n");
+	printf("\t1. Cadastro Alunos;\n");
+	printf("\t2. Cadastro Matérias;\n");
+	printf("\t3. Cadastro Professores;\n");
+	printf("\t4. Retornar ao menu anterior;\n\n");
+	printf("Digite a opção desejada: ");
+	scanf("%d", &op);
+
+	system("cls");
+
+	switch (op)
+	{
+	case cadastroAlunos:
+	    do{
+            system("cls");
+            getchar();
+            printf("Digite o nome do aluno que deseja cadastrar: \n");
+            fgets(alunos[*quantAlunos].nome,50,stdin);
+            printf("Digite o RA do mesmo: \n");
+            scanf("%i", &alunos[*quantAlunos].ra);
+            getchar();
+            *quantAlunos+=1;
+            system("cls");
+            printf("Aluno cadastrado com sucesso!\n");
+            printf("Deseja cadastrar um novo discente?\n\n");
+            printf("\t1. Sim;\n\t2. Não\n\n");
+            if(getchar() == '1')
+                repeteDados = true;
+            else
+                repeteDados = false;
+	    }while(repeteDados);
+		break;
+	case cadastroMaterias:
+	    do{
+            system("cls");
+            getchar();
+            printf("Digite a disciplina que deseja cadastrar: \n");
+            fgets(materias[*quantDisciplina],20,stdin);
+            *quantDisciplina+=1;
+            system("cls");
+            printf("Disciplina cadastrada com sucesso!\n");
+            printf("Deseja cadastrar uma nova disciplina?\n\n");
+            printf("\t1. Sim;\n\t2. Não\n\n");
+            if(getchar() == '1')
+                repeteDados = true;
+            else
+                repeteDados = false;
+	    }while(repeteDados);
+		break;
+	case cadastroProfessor:
+	    do{
+            system("cls");
+            getchar();
+            printf("Digite o nome do professor que deseja cadastrar: \n");
+            fgets(professores[*quantProfessores].nome,50,stdin);
+            printf("Digite o ID do mesmo: \n");
+            scanf("%i", &professores[*quantProfessores].id);
+            getchar();
+            *quantProfessores+=1;
+            system("cls");
+            printf("Professor cadastrado com sucesso!\n");
+            printf("Deseja cadastrar um novo docente?\n\n");
+            printf("\t1. Sim;\n\t2. Não\n\n");
+            if(getchar() == '1')
+                repeteDados = true;
+            else
+                repeteDados = false;
+	    }while(repeteDados);
+		break;
+	case sair:
+	    return 0;
+	}
+
+	return 1;
+}
+
+int vinculacao(tipoAluno* alunos,tipoProfessor* professores, char materias[20][20], int* quantDisciplina, int* quantAlunos, int* quantProfessores)
+{
+
+
+	menuVinculacao op;
+	bool repeteDados;
+	int escolhe;
+	bool escolherPT1[20] = {0},escolherPT2[20] = {0};
+
+	printf("--- Vinculação/Matrícula ---\n\n");
+	printf("\t1. Matricular Alunos em Disciplinas;\n");
+	printf("\t2. Vincular Professores em Disciplinas;\n");
+	printf("\t3. Retornar ao menu anterior;\n\n");
+	printf("Digite a opção desejada: ");
+	scanf("%d", &op);
+
+	system("cls");
+
+	switch (op)
+	{
+	case Vinc_Al_Di:
+            do{
+            system("cls");
+            getchar();
+            printf("-----Alunos cadastrados no sistema-----\n");
+            for(int i=0;i < *quantAlunos; i++){
+                if(escolherPT1[i] == 1)
+                    printf("\t(%i) %s", i+1, alunos[i].nome);
+                else
+                    printf("\t %i. %s", i+1, alunos[i].nome);
+            }
+            printf("--------Fim da lista de alunos---------\n\n");
+            printf("Insira o(s) número(s) do(s) aluno(s) que deseja vincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
+
+                scanf("%i", &escolhe-1);
+                if(escolhe > -1){
+                    escolherPT1[escolhe] = 1;
+                    printf("Aluno %i escolhido com sucesso!", escolhe);
+                }
+
+            }while(escolhe > -1);
+            do{
+            system("cls");
+            getchar();
+            printf("-----Disciplinas cadastradas no sistema-----\n");
+            for(int i=0;i < *quantDisciplina; i++){
+                if(escolherPT2[i] == 1)
+                    printf("\t(%i) %s", i+1, materias[i]);
+                else
+                    printf("\t %i. %s", i+1, materias[i]);
+            }
+            printf("--------Fim da lista de disciplinas---------\n\n");
+            printf("Insira o número(s) da(s) disciplina(s) que deseja vincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
+
+                scanf("%i", &escolhe-1);
+                if(escolhe > -1){
+                    escolherPT2[escolhe] = 1;
+                    printf("Disciplina %i escolhida com sucesso!", escolhe);
+                    for(int i=0;i < *quantAlunos; i++){
+                        if(escolherPT1[i] == 1)
+                            alunos[i].materias[escolhe] = 1;
+                    }
+                }
+
+            }while(escolhe > -1);
+		break;
+	case Vinc_Pr_Di:
+	    do{
+            system("cls");
+            getchar();
+            printf("Digite a disciplina que deseja cadastrar: \n");
+            fgets(materias[*quantDisciplina],20,stdin);
+            *quantDisciplina+=1;
+            system("cls");
+            printf("Disciplina cadastrada com sucesso!\n");
+            printf("Deseja cadastrar uma nova disciplina?\n\n");
+            printf("\t1. Sim;\n\t2. Não\n\n");
+            if(getchar() == '1')
+                repeteDados = true;
+            else
+                repeteDados = false;
+	    }while(repeteDados);
+		break;
+	case sair:
+	    return 0;
+	}
+
+	return 1;
+}
+
+int listagem(tipoAluno* alunos,tipoProfessor* professores, char materias[20][20], int* quantDisciplina, int* quantAlunos, int* quantProfessores){
+    menuListagem op;
+	bool repeteDados;
+
+	printf("--- Listagem ---\n\n");
+	printf("\t1. Imprimir Alunos;\n");
+	printf("\t2. Imprimir Disciplinas;\n");
+	printf("\t3. Imprimir Professores;\n");
+	printf("\t4. Imprimir Disciplinas de um Aluno;\n");
+	printf("\t5. Imprimir Alunos de uma Disciplina;\n");
+	printf("\t6. Imprimir Disciplinas de um Professor;\n");
+	printf("\t7. Imprimir Professores de uma Disciplina;\n");
+	printf("\t8. Retornar ao menu anterior;\n\n");
+	printf("Digite a opção desejada: ");
+	scanf("%d", &op);
+
+	system("cls");
+
+	switch (op)
+	{
+	case TAlunos:
+            system("cls");
+            getchar();
+            if(*quantAlunos != 0)
+            {
+                printf("-----Alunos cadastrados no sistema-----\n");
+                for(int i=0;i < *quantAlunos; i++){
+                    printf("\t%i. %s", i+1, alunos[i].nome);
+                }
+                printf("--------Fim da lista de alunos---------\n");
+                system("pause");
+            }
+            else
+                printf("Não há dados cadastrados!\n");
+		break;
+	case TDiscip:
+            system("cls");
+            getchar();
+            if(*quantDisciplina != 0)
+            {
+                printf("-----Disciplinas cadastrados no sistema-----\n");
+                for(int i=0;i < *quantDisciplina; i++){
+                    printf("\t%i. %s", i+1, materias[i]);
+                }
+                printf("--------Fim da lista de disciplinas---------\n");
+                system("pause");
+            }
+            else
+                printf("Não há dados cadastrados!\n");
+		break;
+	case TProf:
+            system("cls");
+            getchar();
+            if(*quantProfessores != 0)
+            {
+                printf("-----Professores cadastrados no sistema-----\n");
+                for(int i=0;i < *quantProfessores; i++){
+                    printf("\t%i. %s", i+1, professores[i].nome);
+                }
+                printf("--------Fim da lista de professores---------\n");
+                system("pause");
+            }
+            else
+                printf("Não há dados cadastrados!\n");
+		break;
+	default:
+	    return 0;
+	}
+
+	return 1;
+}
