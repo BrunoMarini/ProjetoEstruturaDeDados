@@ -164,6 +164,18 @@ int cadastramento(tipoAluno* alunos, tipoProfessor* professores, char materias[2
 			getchar();
 			printf("Digite a disciplina que deseja cadastrar: ");
 			fgets(materias[*quantDisciplina], 20, stdin);
+			do {
+				if (materias[*quantDisciplina][MAXcarac] == '\n')
+				{
+					materias[*quantDisciplina][MAXcarac] = '\0';
+					MAXcaracBool = true;
+				}
+				else
+					MAXcarac++;
+			} while (MAXcaracBool == false);
+
+			MAXcaracBool = false;
+			MAXcarac = 0;
 			*quantDisciplina += 1;
 			system("cls");
 			printf("Disciplina cadastrada com sucesso!\n");
@@ -424,8 +436,10 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 			printf("--------Fim da lista de alunos---------\n");
 			system("pause");
 		}
-		else
+		else{
 			printf("Não há dados cadastrados!\n");
+			system("pause");
+		}
 		break;
 
 	case TDiscip:
@@ -440,8 +454,10 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 			printf("--------Fim da lista de disciplinas---------\n");
 			system("pause");
 		}
-		else
+		else{
 			printf("Não há dados cadastrados!\n");
+			system("pause");
+		}
 		break;
 
 	case TProf:
@@ -456,43 +472,51 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 			printf("--------Fim da lista de professores---------\n");
 			system("pause");
 		}
-		else
+		else{
 			printf("Não há dados cadastrados!\n");
+			system("pause");
+		}
 		break;
 
 	case Discip_Aluno:  //Disciplinas de um aluno
 
 		system("cls");
 		getchar();
-		printf("-----Alunos cadastrados no sistema-----\n");
+		if(*quantDisciplina > 0 && *quantAlunos > 0)
+        {
+            printf("-----Alunos cadastrados no sistema-----\n");
 
-		for (int i = 0; i < *quantAlunos; i++)
-		{
-			printf("\t%i. %s\n", i + 1, alunos[i].nome);
-		}
-		printf("--------Fim da lista de alunos---------\n");
-		printf("\n Digite o número do aluno: ");
-		scanf("%i", &qualAluno);
+            for (int i = 0; i < *quantAlunos; i++)
+            {
+                printf("\t%i. %s\n", i + 1, alunos[i].nome);
+            }
+            printf("--------Fim da lista de alunos---------\n");
+            printf("\n Digite o número do aluno: ");
+            scanf("%i", &qualAluno);
 
-		flag = 1;
+            flag = 1;
 
-		system("cls");
-		printf("--------Disciplinas do(a) aluno(a)---------\n");
-		printf("--------RA:%i Nome:%s---------\n\n", alunos[qualAluno - 1].ra, alunos[qualAluno - 1].nome);
+            system("cls");
+            printf("--------Disciplinas do(a) aluno(a)---------\n");
+            printf("--------RA:%i Nome:%s---------\n\n", alunos[qualAluno - 1].ra, alunos[qualAluno - 1].nome);
 
-		for (int i = 0; i < *quantDisciplina; i++)
-		{
-			if (alunos[qualAluno - 1].materias[i] == true)
-			{
-				printf("%i. %s", flag, materias[i]);
-				flag++;
-			}
+            for (int i = 0; i < *quantDisciplina; i++)
+            {
+                if (alunos[qualAluno-1].materias[i] == true)//problema aqui!! em qualDisciplina sem valor inicializado
+                {
+                    printf("%i. %s\n", flag, materias[i]);
+                    flag++;
+                }
 
-		}
+            }
+            printf("\n\n--------Fim das matérias---------\n\n");
 
-		printf("\n\n--------Fim das matérias---------\n\n");
-
-		system("pause");
+            system("pause");
+        }
+        else{
+			printf("Não há dados suficientes para esta opção!\n");
+			system("pause");
+        }
 
 		break;
 
@@ -500,37 +524,44 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 
 		system("cls");
 		getchar();
-		printf("-----Disciplinas cadastradas no sistema-----\n");
+		if(*quantDisciplina > 0 && *quantAlunos > 0)
+        {
+            printf("-----Disciplinas cadastradas no sistema-----\n");
 
-		for (int i = 0; i < *quantDisciplina; i++)
-		{
-			printf("\t%i. %s", i + 1, materias[i]);
-		}
+            for (int i = 0; i < *quantDisciplina; i++)
+            {
+                printf("\t%i. %s", i + 1, materias[i]);
+            }
 
-		printf("--------Fim da lista de disciplinas---------\n");
+            printf("--------Fim da lista de disciplinas---------\n");
 
-		printf("\n Digite o numero da disciplina: ");
-		scanf("%i", &qualDisciplina);
+            printf("\n Digite o numero da disciplina: ");
+            scanf("%i", &qualDisciplina);
 
-		flag = 1;
+            flag = 1;
 
-		system("cls");
-		printf("--------Alunos matriculados em---------\n");
-		printf("--------%s---------\n\n", materias[qualDisciplina-1]);
+            system("cls");
+            printf("--------Alunos matriculados em---------\n");
+            printf("--------%s---------\n\n", materias[qualDisciplina-1]);
 
-		for (int i = 0; i < *quantAlunos; i++)
-		{
-			if (alunos[i].materias[qualDisciplina - 1] == true)
-			{
-				printf("%i. %s\n", flag, alunos[i].nome);
-				flag++;
-			}
+            for (int i = 0; i < *quantAlunos; i++)
+            {
+                if (alunos[i].materias[qualDisciplina - 1] == true)
+                {
+                    printf("%i. %s\n", flag, alunos[i].nome);
+                    flag++;
+                }
 
-		}
+            }
 
-		printf("\n--------Fim das matérias---------\n\n");
+            printf("\n--------Fim das matérias---------\n\n");
 
-		system("pause");
+            system("pause");
+        }
+        else{
+			printf("Não há dados suficientes para esta opção!\n");
+			system("pause");
+        }
 
 		break;
 
@@ -538,74 +569,89 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 
 		system("cls");
 		getchar();
-		printf("-----Professores cadastrados no sistema-----\n");
+		if(*quantDisciplina > 0 && *quantProfessores > 0)
+        {
+            printf("-----Professores cadastrados no sistema-----\n");
 
-		for (int i = 0; i < *quantProfessores; i++)
-		{
-			printf("\t%i. %s\n", i + 1, professores[i].nome);
-		}
+            for (int i = 0; i < *quantProfessores; i++)
+            {
+                printf("\t%i. %s\n", i + 1, professores[i].nome);
+            }
 
-		printf("--------Fim da lista de disciplinas---------\n");
+            printf("--------Fim da lista de professores---------\n");
 
-		printf("\n Digite o número da disciplina: ");
-		scanf("%i", &qualProfessor);
+            printf("\n Digite o número do professor: ");
+            scanf("%i", &qualProfessor);
 
-		flag = 1;
+            flag = 1;
 
-		system("cls");
-		printf("--------Disciplinas que é/são lecionada(s) por---------\n");
-		printf("--------Prof(a). %s---------\n\n", professores[qualProfessor - 1].nome);
+            system("cls");
+            printf("--------Disciplina(s) que é/são lecionada(s) por---------\n");
+            printf("--------Prof(a). %s---------\n\n", professores[qualProfessor - 1].nome);
 
-		for (int i = 0; i < *quantDisciplina; i++)
-		{
-			if (professores[qualProfessor - 1].materias[i] == true)
-			{
-				printf("%i. %s\n", flag, materias[i]);
-				flag++;
-			}
+            for (int i = 0; i < *quantDisciplina; i++)
+            {
+                if (professores[qualProfessor - 1].materias[i] == true)
+                {
+                    printf("%i. %s\n", flag, materias[i]);
+                    flag++;
+                }
 
-		}
+            }
 
-		printf("\n--------Fim das matérias---------\n\n");
+            printf("\n--------Fim das matérias---------\n\n");
 
-		system("pause");
+            system("pause");
+        }
+        else{
+			printf("Não há dados suficientes para esta opção!\n");
+			system("pause");
+        }
 		break;
 
 	case Prof_Discip: //Professores de uma disciplina
 
 		system("cls");
 		getchar();
-		printf("-----Disciplinas cadastradas no sistema-----\n");
+		if(*quantDisciplina > 0 && *quantProfessores > 0)
+        {
+            printf("-----Disciplinas cadastradas no sistema-----\n");
 
-		for (int i = 0; i < *quantDisciplina; i++)
-		{
-			printf("\t%i. %s\n", i + 1, materias[i]);
-		}
+            for (int i = 0; i < *quantDisciplina; i++)
+            {
+                printf("\t%i. %s\n", i + 1, materias[i]);
+            }
 
-		printf("--------Fim da lista de disciplinas---------\n");
+            printf("--------Fim da lista de disciplinas---------\n");
 
-		printf("\n Digite o número da disciplina: ");
-		scanf("%i", &qualDisciplina);
+            printf("\n Digite o número da disciplina: ");
+            scanf("%i", &qualDisciplina);
 
-		flag = 1;
+            flag = 1;
 
-		system("cls");
-		printf("--------Professores que lecionam---------\n");
-		printf("--------%s---------\n\n", materias[qualDisciplina-1]);
+            system("cls");
+            printf("--------Professores que lecionam---------\n");
+            printf("--------%s---------\n\n", materias[qualDisciplina-1]);
 
-		for (int i = 0; i < *quantProfessores; i++)
-		{
-			if (professores[i].materias[qualDisciplina-1] == true)
-			{
-				printf("%i. %s\n", flag, professores[i].nome);
-				flag++;
-			}
+            for (int i = 0; i < *quantProfessores; i++)
+            {
+                if (professores[i].materias[qualDisciplina-1] == true)
+                {
+                    printf("%i. %s\n", flag, professores[i].nome);
+                    flag++;
+                }
 
-		}
+            }
 
-		printf("\n--------Fim dos professores---------\n\n");
+            printf("\n--------Fim dos professores---------\n\n");
 
-		system("pause");
+            system("pause");
+        }
+        else{
+			printf("Não há dados suficientes para esta opção!\n");
+			system("pause");
+        }
+
 		break;
 	default:
 		return 0;
@@ -648,7 +694,7 @@ int cancel(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20],
 					printf("\t %i. %s\n", i + 1, alunos[i].nome);
 			}
 			printf("--------Fim da lista de alunos---------\n\n");
-			printf("Insira o(s) número(s) do(s) aluno(s) que deseja vincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
+			printf("Insira o(s) número(s) do(s) aluno(s) que deseja desvincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
 
 			scanf("%i", &escolhe);
 
@@ -677,7 +723,7 @@ int cancel(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20],
 			}
 
 			printf("--------Fim da lista de disciplinas---------\n\n");
-			printf("Insira o número(s) da(s) disciplina(s) que deseja vincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
+			printf("Insira o número(s) da(s) disciplina(s) que deseja desvincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
 
 			scanf("%i", &escolhe);
 
@@ -691,7 +737,7 @@ int cancel(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20],
 				for (int i = 0; i < *quantAlunos; i++)
 				{
 					if (escolherPT1[i] == 1)
-						alunos[i].materias[escolhe] = 1;
+						alunos[i].materias[escolhe] = 0;
 				}
 			}
 
@@ -719,7 +765,7 @@ int cancel(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20],
 					printf("\t %i. %s\n", i + 1, professores[i].nome);
 			}
 			printf("--------Fim da lista de professores---------\n\n");
-			printf("Insira o(s) número(s) do(s) professor(es) que deseja vincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
+			printf("Insira o(s) número(s) do(s) professor(es) que deseja desvincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
 
 			scanf("%i", &escolhe);
 
@@ -748,7 +794,7 @@ int cancel(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20],
 			}
 
 			printf("--------Fim da lista de disciplinas---------\n\n");
-			printf("Insira o número(s) da(s) disciplina(s) que deseja vincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
+			printf("Insira o número(s) da(s) disciplina(s) que deseja desvincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
 
 			scanf("%i", &escolhe);
 
@@ -762,7 +808,7 @@ int cancel(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20],
 				for (int i = 0; i < *quantProfessores; i++)
 				{
 					if (escolherPT1[i] == 1)
-						professores[i].materias[escolhe] = 1;
+						professores[i].materias[escolhe] = 0;
 				}
 			}
 
