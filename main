@@ -103,7 +103,8 @@ int cadastramento(tipoAluno* alunos, tipoProfessor* professores, char materias[2
 
 
 	menuCadastros op;
-	bool repeteDados;
+	bool repeteDados, MAXcaracBool = 0;
+	int MAXcarac = 0;
 
 	printf("--- Cadastros ---\n\n");
 	printf("\t1. Cadastro Alunos;\n");
@@ -123,6 +124,19 @@ int cadastramento(tipoAluno* alunos, tipoProfessor* professores, char materias[2
 			getchar();
 			printf("Digite o nome do aluno que deseja cadastrar: ");
 			fgets(alunos[*quantAlunos].nome, 50, stdin);
+			
+			do {
+				if (alunos[*quantAlunos].nome[MAXcarac] == '\n')
+				{
+					alunos[*quantAlunos].nome[MAXcarac] = '\0';
+					MAXcaracBool = true;
+				}
+				else
+					MAXcarac++;
+			} while (MAXcaracBool == false);
+			
+			MAXcaracBool = false;
+			MAXcarac = 0;
 			printf("Digite o RA do mesmo: ");
 			scanf("%i", &alunos[*quantAlunos].ra);
 			getchar();
@@ -155,12 +169,29 @@ int cadastramento(tipoAluno* alunos, tipoProfessor* professores, char materias[2
 		} while (repeteDados);
 		break;
 	case cadastroProfessor:
-		do {
+		
+		do 
+		{
 			system("cls");
 			getchar();
 			printf("Digite o nome do professor que deseja cadastrar: ");
 			fgets(professores[*quantProfessores].nome, 50, stdin);
+			do {
+				if (professores[*quantProfessores].nome[MAXcarac] == '\n')
+				{
+					professores[*quantProfessores].nome[MAXcarac] = '\0';
+					MAXcaracBool = true;
+				}
+				else
+					MAXcarac++;
+			} while (MAXcaracBool == false);
+			
+			MAXcaracBool = false;
+
+			MAXcarac = 0;
+			
 			printf("Digite o ID do mesmo: ");
+			
 			scanf("%i", &professores[*quantProfessores].id);
 			getchar();
 			*quantProfessores += 1;
@@ -168,11 +199,13 @@ int cadastramento(tipoAluno* alunos, tipoProfessor* professores, char materias[2
 			printf("Professor cadastrado com sucesso!\n");
 			printf("Deseja cadastrar um novo docente?\n\n");
 			printf("\t1. Sim;\n\t2. Não\n\nOpção: ");
+			
 			if (getchar() == '1')
 				repeteDados = true;
 			else
 				repeteDados = false;
 		} while (repeteDados);
+		
 		break;
 	case sair:
 		return 0;
@@ -208,19 +241,19 @@ int vinculacao(tipoAluno* alunos, tipoProfessor* professores, char materias[20][
 			getchar();
 			printf("-----Alunos cadastrados no sistema-----\n");
 
-			for (int i = 0; i < *quantAlunos; i++) 
+			for (int i = 0; i < *quantAlunos; i++)
 			{
 				if (escolherPT1[i] == 1)
-					printf("\t(%i) %s", i + 1, alunos[i].nome);
+					printf("\t(%i) %s\n", i + 1, alunos[i].nome);
 				else
-					printf("\t %i. %s", i + 1, alunos[i].nome);
+					printf("\t %i. %s\n", i + 1, alunos[i].nome);
 			}
 			printf("--------Fim da lista de alunos---------\n\n");
 			printf("Insira o(s) número(s) do(s) aluno(s) que deseja vincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
 
 			scanf("%i", &escolhe);
 
-			escolhe = escolhe - 1;
+			escolhe--;
 
 			if (escolhe > -1)
 			{
@@ -243,19 +276,19 @@ int vinculacao(tipoAluno* alunos, tipoProfessor* professores, char materias[20][
 				else
 					printf("\t %i. %s", i + 1, materias[i]);
 			}
-			
+
 			printf("--------Fim da lista de disciplinas---------\n\n");
 			printf("Insira o número(s) da(s) disciplina(s) que deseja vincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
 
 			scanf("%i", &escolhe);
-			
-			escolhe = escolhe - 1;
 
-			if (escolhe > -1) 
+			escolhe--;
+
+			if (escolhe > -1)
 			{
 				escolherPT2[escolhe] = 1;
 				printf("Disciplina %i escolhida com sucesso!", escolhe + 1);
-				
+
 				for (int i = 0; i < *quantAlunos; i++)
 				{
 					if (escolherPT1[i] == 1)
@@ -266,7 +299,7 @@ int vinculacao(tipoAluno* alunos, tipoProfessor* professores, char materias[20][
 			escolhe++;
 
 		} while (escolhe != 0);
-		
+
 
 		return 1;
 
@@ -275,19 +308,72 @@ int vinculacao(tipoAluno* alunos, tipoProfessor* professores, char materias[20][
 	case Vinc_Pr_Di:
 		do {
 			system("cls");
+
 			getchar();
-			printf("Digite a disciplina que deseja cadastrar: ");
-			fgets(materias[*quantDisciplina], 20, stdin);
-			*quantDisciplina += 1;
+			printf("-----Professores cadastrados no sistema-----\n");
+
+			for (int i = 0; i < *quantProfessores; i++)
+			{
+				if (escolherPT1[i] == 1)
+					printf("\t(%i) %s\n", i + 1, professores[i].nome);
+				else
+					printf("\t %i. %s\n", i + 1, professores[i].nome);
+			}
+			printf("--------Fim da lista de professores---------\n\n");
+			printf("Insira o(s) número(s) do(s) professor(es) que deseja vincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
+
+			scanf("%i", &escolhe);
+
+			escolhe--;
+
+			if (escolhe > -1)
+			{
+				escolherPT1[escolhe] = 1;
+				printf("Professor %i escolhido com sucesso!", escolhe);
+			}
+
+			escolhe++;
+
+		} while (escolhe != 0);
+
+		do {
 			system("cls");
-			printf("Disciplina cadastrada com sucesso!\n");
-			printf("Deseja cadastrar uma nova disciplina?\n\n");
-			printf("\t1. Sim;\n\t2. Não\n\nOpção: ");
-			if (getchar() == '1')
-				repeteDados = true;
-			else
-				repeteDados = false;
-		} while (repeteDados);
+			getchar();
+			printf("-----Disciplinas cadastradas no sistema-----\n");
+
+			for (int i = 0; i < *quantDisciplina; i++) {
+				if (escolherPT2[i] == 1)
+					printf("\t(%i) %s", i + 1, materias[i]);
+				else
+					printf("\t %i. %s", i + 1, materias[i]);
+			}
+
+			printf("--------Fim da lista de disciplinas---------\n\n");
+			printf("Insira o número(s) da(s) disciplina(s) que deseja vincular:\n(Separado por ENTER, ao finalizar digite 0)\n");
+
+			scanf("%i", &escolhe);
+
+			escolhe--;
+
+			if (escolhe > -1)
+			{
+				escolherPT2[escolhe] = 1;
+				printf("Disciplina %i escolhida com sucesso!", escolhe + 1);
+
+				for (int i = 0; i < *quantProfessores; i++)
+				{
+					if (escolherPT1[i] == 1)
+						professores[i].materias[escolhe] = 1;
+				}
+			}
+
+			escolhe++;
+
+		} while (escolhe != 0);
+
+
+		return 1;
+
 		break;
 
 	case ssair:
@@ -299,7 +385,7 @@ int vinculacao(tipoAluno* alunos, tipoProfessor* professores, char materias[20][
 }
 
 int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20], int* quantDisciplina, int* quantAlunos, int* quantProfessores) {
-	
+
 	menuListagem op;
 	bool repeteDados;
 	int i, qualAluno, qualDisciplina, flag;
@@ -327,7 +413,7 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 		{
 			printf("-----Alunos cadastrados no sistema-----\n");
 			for (int i = 0; i < *quantAlunos; i++) {
-				printf("\t%i. %s", i + 1, alunos[i].nome);
+				printf("\t%i. RA:%i Nome:%s\n", i + 1, alunos[i].ra, alunos[i].nome);
 			}
 			printf("--------Fim da lista de alunos---------\n");
 			system("pause");
@@ -359,7 +445,7 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 		{
 			printf("-----Professores cadastrados no sistema-----\n");
 			for (int i = 0; i < *quantProfessores; i++) {
-				printf("\t%i. %s", i + 1, professores[i].nome);
+				printf("\t%i. ID:%i Nome:%s\n", i + 1, professores[i].id, professores[i].nome);
 			}
 			printf("--------Fim da lista de professores---------\n");
 			system("pause");
@@ -367,39 +453,39 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 		else
 			printf("Não há dados cadastrados!\n");
 		break;
-	
+
 	case Discip_Aluno:
 
-			system("cls");
-			getchar();
-			printf("-----Alunos cadastrados no sistema-----\n");
-			
-			for (i = 0; i < *quantAlunos; i++)
+		system("cls");
+		getchar();
+		printf("-----Alunos cadastrados no sistema-----\n");
+
+		for (int i = 0; i < *quantAlunos; i++)
+		{
+			printf("\t%i. %s\n", i + 1, alunos[i].nome);
+		}
+		printf("--------Fim da lista de alunos---------\n");
+		printf("\n Digite o número do aluno: ");
+		scanf("%i", &qualAluno);
+
+		flag = 1;
+
+		system("cls");
+		printf("--------Matérias que %s está cadastrado---------\n\n", alunos[qualAluno - 1].nome);
+
+		for (int i = 0; i < *quantDisciplina; i++)
+		{
+			if (alunos[qualAluno - 1].materias[i] == true)
 			{
-				printf("\t%i. %s", i + 1, alunos[i].nome);
-			}
-			printf("--------Fim da lista de alunos---------\n");
-			printf("\n Digite o numero do aluno: ");
-			scanf("%i", &qualAluno);
-
-			flag = 1;
-
-			system("cls");
-			printf("--------Matérias que %s está cadastrado---------\n\n", alunos[qualAluno - 1].nome);
-
-			for (i = 0; i < *quantDisciplina; i++)
-			{			
-				if (alunos[qualAluno - 1].materias[i] == true)
-				{
-					printf("%i. %s", flag, materias[i]);
-					flag++;
-				}
-				
+				printf("%i. %s", flag, materias[i]);
+				flag++;
 			}
 
-			printf("\n\n--------Fim das matérias---------\n\n", alunos[qualAluno - 1].nome);
+		}
 
-			system("pause");
+		printf("\n\n--------Fim das matérias---------\n\n");
+
+		system("pause");
 
 		break;
 
@@ -409,7 +495,7 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 		getchar();
 		printf("-----Disciplinas cadastradas no sistema-----\n");
 
-		for (i = 0; i < *quantDisciplina; i++)
+		for (int i = 0; i < *quantDisciplina; i++)
 		{
 			printf("\t%i. %s", i + 1, materias[i]);
 		}
@@ -422,13 +508,13 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 		flag = 1;
 
 		system("cls");
-		printf("--------Alunos que estão cadastrados na disciplina selecionada---------\n\n");
+		printf("--------Alunos que estão cadastrados---------\n\n");
 
-		for (i = 0; i < *quantAlunos; i++)
+		for (int i = 0; i < *quantAlunos; i++)
 		{
-			if (*alunos[i - 1].materias == true)
+			if (alunos[i].materias[qualDisciplina - 1] == true)
 			{
-				printf("%i. %s", flag, alunos[i].nome);
+				printf("%i. %s\n", flag, alunos[i].nome);
 				flag++;
 			}
 
