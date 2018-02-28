@@ -285,9 +285,9 @@ int vinculacao(tipoAluno* alunos, tipoProfessor* professores, char materias[20][
 		} while (escolhe != 0);
 
 		do {
-			system("cls");
+			//system("cls");
 			getchar();
-			printf("-----Disciplinas cadastradas no sistema-----\n");
+			printf("\n-----Disciplinas cadastradas no sistema-----\n");
 
 			for (int i = 0; i < *quantDisciplina; i++) {
 				if (escolherPT2[i] == 1)
@@ -356,9 +356,9 @@ int vinculacao(tipoAluno* alunos, tipoProfessor* professores, char materias[20][
 		} while (escolhe != 0);
 
 		do {
-			system("cls");
+			//system("cls");
 			getchar();
-			printf("-----Disciplinas cadastradas no sistema-----\n");
+			printf("\n-----Disciplinas cadastradas no sistema-----\n");
 
 			for (int i = 0; i < *quantDisciplina; i++) {
 				if (escolherPT2[i] == 1)
