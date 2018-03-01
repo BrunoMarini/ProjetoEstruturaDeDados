@@ -276,7 +276,8 @@ int vinculacao(tipoAluno* alunos, tipoProfessor* professores, char materias[20][
 
 			if (escolhe > -1)
 			{
-				escolherPT1[escolhe] = 1;
+			    if(escolherPT1[escolhe] == 1)escolherPT1[escolhe] = 0;
+			    else escolherPT1[escolhe] = 1;
 				printf("Aluno %i escolhido com sucesso!", escolhe);
 			}
 
@@ -285,15 +286,15 @@ int vinculacao(tipoAluno* alunos, tipoProfessor* professores, char materias[20][
 		} while (escolhe != 0);
 
 		do {
-			//system("cls");
+			system("cls");
 			getchar();
 			printf("\n-----Disciplinas cadastradas no sistema-----\n");
 
 			for (int i = 0; i < *quantDisciplina; i++) {
 				if (escolherPT2[i] == 1)
-					printf("\t(%i) %s", i + 1, materias[i]);
+					printf("\t(%i) %s\n", i + 1, materias[i]);
 				else
-					printf("\t %i. %s", i + 1, materias[i]);
+					printf("\t %i. %s\n", i + 1, materias[i]);
 			}
 
 			printf("--------Fim da lista de disciplinas---------\n\n");
@@ -305,7 +306,8 @@ int vinculacao(tipoAluno* alunos, tipoProfessor* professores, char materias[20][
 
 			if (escolhe > -1)
 			{
-				escolherPT2[escolhe] = 1;
+			    if(escolherPT2[escolhe] == 1)escolherPT2[escolhe] = 0;
+			    else escolherPT2[escolhe] = 1;
 				printf("Disciplina %i escolhida com sucesso!", escolhe + 1);
 
 				for (int i = 0; i < *quantAlunos; i++)
@@ -347,7 +349,8 @@ int vinculacao(tipoAluno* alunos, tipoProfessor* professores, char materias[20][
 
 			if (escolhe > -1)
 			{
-				escolherPT1[escolhe] = 1;
+				if(escolherPT1[escolhe] == 1)escolherPT1[escolhe] = 0;
+			    else escolherPT1[escolhe] = 1;
 				printf("Professor %i escolhido com sucesso!", escolhe);
 			}
 
@@ -362,9 +365,9 @@ int vinculacao(tipoAluno* alunos, tipoProfessor* professores, char materias[20][
 
 			for (int i = 0; i < *quantDisciplina; i++) {
 				if (escolherPT2[i] == 1)
-					printf("\t(%i) %s", i + 1, materias[i]);
+					printf("\t(%i) %s\n", i + 1, materias[i]);
 				else
-					printf("\t %i. %s", i + 1, materias[i]);
+					printf("\t %i. %s\n", i + 1, materias[i]);
 			}
 
 			printf("--------Fim da lista de disciplinas---------\n\n");
@@ -376,7 +379,8 @@ int vinculacao(tipoAluno* alunos, tipoProfessor* professores, char materias[20][
 
 			if (escolhe > -1)
 			{
-				escolherPT2[escolhe] = 1;
+				if(escolherPT2[escolhe] == 1)escolherPT2[escolhe] = 0;
+			    else escolherPT2[escolhe] = 1;
 				printf("Disciplina %i escolhida com sucesso!", escolhe + 1);
 
 				for (int i = 0; i < *quantProfessores; i++)
@@ -436,7 +440,7 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 			printf("--------Fim da lista de alunos---------\n");
 			system("pause");
 		}
-		else{
+		else {
 			printf("Não há dados cadastrados!\n");
 			system("pause");
 		}
@@ -449,12 +453,12 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 		{
 			printf("-----Disciplinas cadastrados no sistema-----\n");
 			for (int i = 0; i < *quantDisciplina; i++) {
-				printf("\t%i. %s", i + 1, materias[i]);
+				printf("\t%i. %s\n", i + 1, materias[i]);
 			}
 			printf("--------Fim da lista de disciplinas---------\n");
 			system("pause");
 		}
-		else{
+		else {
 			printf("Não há dados cadastrados!\n");
 			system("pause");
 		}
@@ -472,7 +476,7 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 			printf("--------Fim da lista de professores---------\n");
 			system("pause");
 		}
-		else{
+		else {
 			printf("Não há dados cadastrados!\n");
 			system("pause");
 		}
@@ -482,41 +486,41 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 
 		system("cls");
 		getchar();
-		if(*quantDisciplina > 0 && *quantAlunos > 0)
-        {
-            printf("-----Alunos cadastrados no sistema-----\n");
+		if (*quantDisciplina > 0 && *quantAlunos > 0)
+		{
+			printf("-----Alunos cadastrados no sistema-----\n");
 
-            for (int i = 0; i < *quantAlunos; i++)
-            {
-                printf("\t%i. %s\n", i + 1, alunos[i].nome);
-            }
-            printf("--------Fim da lista de alunos---------\n");
-            printf("\n Digite o número do aluno: ");
-            scanf("%i", &qualAluno);
+			for (int i = 0; i < *quantAlunos; i++)
+			{
+				printf("\t%i. %s\n", i + 1, alunos[i].nome);
+			}
+			printf("--------Fim da lista de alunos---------\n");
+			printf("\n Digite o número do aluno: ");
+			scanf("%i", &qualAluno);
 
-            flag = 1;
+			flag = 1;
 
-            system("cls");
-            printf("--------Disciplinas do(a) aluno(a)---------\n");
-            printf("--------RA:%i Nome:%s---------\n\n", alunos[qualAluno - 1].ra, alunos[qualAluno - 1].nome);
+			system("cls");
+			printf("--------Disciplinas do(a) aluno(a)---------\n");
+			printf("--------RA:%i Nome:%s---------\n\n", alunos[qualAluno - 1].ra, alunos[qualAluno - 1].nome);
 
-            for (int i = 0; i < *quantDisciplina; i++)
-            {
-                if (alunos[qualAluno-1].materias[i] == true)//problema aqui!! em qualDisciplina sem valor inicializado
-                {
-                    printf("%i. %s\n", flag, materias[i]);
-                    flag++;
-                }
+			for (int i = 0; i < *quantDisciplina; i++)
+			{
+				if (alunos[qualAluno - 1].materias[i] == true)//problema aqui!! em qualDisciplina sem valor inicializado
+				{
+					printf("%i. %s\n", flag, materias[i]);
+					flag++;
+				}
 
-            }
-            printf("\n\n--------Fim das matérias---------\n\n");
+			}
+			printf("\n\n--------Fim das matérias---------\n\n");
 
-            system("pause");
-        }
-        else{
+			system("pause");
+		}
+		else {
 			printf("Não há dados suficientes para esta opção!\n");
 			system("pause");
-        }
+		}
 
 		break;
 
@@ -524,44 +528,44 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 
 		system("cls");
 		getchar();
-		if(*quantDisciplina > 0 && *quantAlunos > 0)
-        {
-            printf("-----Disciplinas cadastradas no sistema-----\n");
+		if (*quantDisciplina > 0 && *quantAlunos > 0)
+		{
+			printf("-----Disciplinas cadastradas no sistema-----\n");
 
-            for (int i = 0; i < *quantDisciplina; i++)
-            {
-                printf("\t%i. %s", i + 1, materias[i]);
-            }
+			for (int i = 0; i < *quantDisciplina; i++)
+			{
+				printf("\t%i. %s\n", i + 1, materias[i]);
+			}
 
-            printf("--------Fim da lista de disciplinas---------\n");
+			printf("--------Fim da lista de disciplinas---------\n");
 
-            printf("\n Digite o numero da disciplina: ");
-            scanf("%i", &qualDisciplina);
+			printf("\n Digite o numero da disciplina: ");
+			scanf("%i", &qualDisciplina);
 
-            flag = 1;
+			flag = 1;
 
-            system("cls");
-            printf("--------Alunos matriculados em---------\n");
-            printf("--------%s---------\n\n", materias[qualDisciplina-1]);
+			system("cls");
+			printf("--------Alunos matriculados em---------\n");
+			printf("--------%s---------\n\n", materias[qualDisciplina - 1]);
 
-            for (int i = 0; i < *quantAlunos; i++)
-            {
-                if (alunos[i].materias[qualDisciplina - 1] == true)
-                {
-                    printf("%i. %s\n", flag, alunos[i].nome);
-                    flag++;
-                }
+			for (int i = 0; i < *quantAlunos; i++)
+			{
+				if (alunos[i].materias[qualDisciplina - 1] == true)
+				{
+					printf("%i. %s\n", flag, alunos[i].nome);
+					flag++;
+				}
 
-            }
+			}
 
-            printf("\n--------Fim das matérias---------\n\n");
+			printf("\n--------Fim das matérias---------\n\n");
 
-            system("pause");
-        }
-        else{
+			system("pause");
+		}
+		else {
 			printf("Não há dados suficientes para esta opção!\n");
 			system("pause");
-        }
+		}
 
 		break;
 
@@ -569,88 +573,88 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 
 		system("cls");
 		getchar();
-		if(*quantDisciplina > 0 && *quantProfessores > 0)
-        {
-            printf("-----Professores cadastrados no sistema-----\n");
+		if (*quantDisciplina > 0 && *quantProfessores > 0)
+		{
+			printf("-----Professores cadastrados no sistema-----\n");
 
-            for (int i = 0; i < *quantProfessores; i++)
-            {
-                printf("\t%i. %s\n", i + 1, professores[i].nome);
-            }
+			for (int i = 0; i < *quantProfessores; i++)
+			{
+				printf("\t%i. %s\n", i + 1, professores[i].nome);
+			}
 
-            printf("--------Fim da lista de professores---------\n");
+			printf("--------Fim da lista de professores---------\n");
 
-            printf("\n Digite o número do professor: ");
-            scanf("%i", &qualProfessor);
+			printf("\n Digite o número do professor: ");
+			scanf("%i", &qualProfessor);
 
-            flag = 1;
+			flag = 1;
 
-            system("cls");
-            printf("--------Disciplina(s) que é/são lecionada(s) por---------\n");
-            printf("--------Prof(a). %s---------\n\n", professores[qualProfessor - 1].nome);
+			system("cls");
+			printf("--------Disciplina(s) que é/são lecionada(s) por---------\n");
+			printf("--------Prof(a). %s---------\n\n", professores[qualProfessor - 1].nome);
 
-            for (int i = 0; i < *quantDisciplina; i++)
-            {
-                if (professores[qualProfessor - 1].materias[i] == true)
-                {
-                    printf("%i. %s\n", flag, materias[i]);
-                    flag++;
-                }
+			for (int i = 0; i < *quantDisciplina; i++)
+			{
+				if (professores[qualProfessor - 1].materias[i] == true)
+				{
+					printf("%i. %s\n", flag, materias[i]);
+					flag++;
+				}
 
-            }
+			}
 
-            printf("\n--------Fim das matérias---------\n\n");
+			printf("\n--------Fim das matérias---------\n\n");
 
-            system("pause");
-        }
-        else{
+			system("pause");
+		}
+		else {
 			printf("Não há dados suficientes para esta opção!\n");
 			system("pause");
-        }
+		}
 		break;
 
 	case Prof_Discip: //Professores de uma disciplina
 
 		system("cls");
 		getchar();
-		if(*quantDisciplina > 0 && *quantProfessores > 0)
-        {
-            printf("-----Disciplinas cadastradas no sistema-----\n");
+		if (*quantDisciplina > 0 && *quantProfessores > 0)
+		{
+			printf("-----Disciplinas cadastradas no sistema-----\n");
 
-            for (int i = 0; i < *quantDisciplina; i++)
-            {
-                printf("\t%i. %s\n", i + 1, materias[i]);
-            }
+			for (int i = 0; i < *quantDisciplina; i++)
+			{
+				printf("\t%i. %s\n", i + 1, materias[i]);
+			}
 
-            printf("--------Fim da lista de disciplinas---------\n");
+			printf("--------Fim da lista de disciplinas---------\n");
 
-            printf("\n Digite o número da disciplina: ");
-            scanf("%i", &qualDisciplina);
+			printf("\n Digite o número da disciplina: ");
+			scanf("%i", &qualDisciplina);
 
-            flag = 1;
+			flag = 1;
 
-            system("cls");
-            printf("--------Professores que lecionam---------\n");
-            printf("--------%s---------\n\n", materias[qualDisciplina-1]);
+			system("cls");
+			printf("--------Professores que lecionam---------\n");
+			printf("--------%s---------\n\n", materias[qualDisciplina - 1]);
 
-            for (int i = 0; i < *quantProfessores; i++)
-            {
-                if (professores[i].materias[qualDisciplina-1] == true)
-                {
-                    printf("%i. %s\n", flag, professores[i].nome);
-                    flag++;
-                }
+			for (int i = 0; i < *quantProfessores; i++)
+			{
+				if (professores[i].materias[qualDisciplina - 1] == true)
+				{
+					printf("%i. %s\n", flag, professores[i].nome);
+					flag++;
+				}
 
-            }
+			}
 
-            printf("\n--------Fim dos professores---------\n\n");
+			printf("\n--------Fim dos professores---------\n\n");
 
-            system("pause");
-        }
-        else{
+			system("pause");
+		}
+		else {
 			printf("Não há dados suficientes para esta opção!\n");
 			system("pause");
-        }
+		}
 
 		break;
 	default:
@@ -660,10 +664,10 @@ int listagem(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20
 	return 1;
 }
 
-int cancel(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20], int* quantDisciplina, int* quantAlunos, int* quantProfessores){
+int cancel(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20], int* quantDisciplina, int* quantAlunos, int* quantProfessores) {
 
-    //ATENÇÃO, COPIEI ESTA FUNÇÃO DA 'VINCULACAO' PARA TOMAR COMO BASE. SÓ ALTEREI OS PRINTF DESTE MENU
-    menuVinculacao op;
+	//ATENÇÃO, COPIEI ESTA FUNÇÃO DA 'VINCULACAO' PARA TOMAR COMO BASE. SÓ ALTEREI OS PRINTF DESTE MENU
+	menuVinculacao op;
 	//bool repeteDados;
 	int escolhe;
 	bool escolherPT1[20] = { 0 }, escolherPT2[20] = { 0 };
@@ -717,9 +721,9 @@ int cancel(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20],
 
 			for (int i = 0; i < *quantDisciplina; i++) {
 				if (escolherPT2[i] == 1)
-					printf("\t(%i) %s", i + 1, materias[i]);
+					printf("\t(%i) %s\n", i + 1, materias[i]);
 				else
-					printf("\t %i. %s", i + 1, materias[i]);
+					printf("\t %i. %s\n", i + 1, materias[i]);
 			}
 
 			printf("--------Fim da lista de disciplinas---------\n\n");
@@ -788,9 +792,9 @@ int cancel(tipoAluno* alunos, tipoProfessor* professores, char materias[20][20],
 
 			for (int i = 0; i < *quantDisciplina; i++) {
 				if (escolherPT2[i] == 1)
-					printf("\t(%i) %s", i + 1, materias[i]);
+					printf("\t(%i) %s\n", i + 1, materias[i]);
 				else
-					printf("\t %i. %s", i + 1, materias[i]);
+					printf("\t %i. %s\n", i + 1, materias[i]);
 			}
 
 			printf("--------Fim da lista de disciplinas---------\n\n");
